@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: black;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+    .bottom-middle {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      color: white;
+      font-size: 25px;
+    }
+    #button-container {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    button {
+      background-color: #dd7973;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px; /* Round the edges with a radius of 20 pixels */
+
+    }
+    button:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <div id="button-container">
+    <button id="restartButton">Restart</button>
+  </div>
+
+  <div class="bottom-middle">A ball bouncing on different planets</div>
+  <!-- include the p5.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+  <canvas id="myCanvas"></canvas>
+  <script>
+    // Declare ball variables
+    let x, y; // position
+    let vx, vy; // velocity
+    let ax, ay; // acceleration
+    let randomColor;//particle color
+    let radius;
+    let e = 0.999; //coeff restitution;
+    let planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'];
+    let starPositions = [];
+    let planetColors = ['#9b9b9b', '#ffff00', '#0080ff', '#ff4500', '#ffffa5', '#ffd480', '#00ffbf', '#00bfff'];
+    // Declare planetary gravity constants
+    const mercuryGravity = 3.7;
+    const venusGravity = 8.87;
+    const earthGravity = 9.81;
+    const marsGravity = 3.711;
+    const jupiterGravity = 24.79;
+    const saturnGravity = 10.44;
+    const uranusGravity = 8.87;
+    const neptuneGravity = 11.15;
+
+    let canvas = document.getElementById("myCanvas");
+     // Set the canvas width and height to match the viewport size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight-200;
+    let ctx = canvas.getContext("2d");
+
+
+    function setup(){
+    // Initialize ball variables
+    x = [];
+    y = [];
+    vx = [];
+    vy = [];
+    ax = [];
+    ay = [];
+    randomColor=[];
+    radius = 20;
+
+    // Generate an array of 100 random star positions
+    for (let i = 0; i < 100; i++) {
+      starPositions.push([Math.random() * canvas.width, Math.random() * canvas.height]);
+    }
+
+    // Generate 8 random colors and store in array
+    for (let i = 0; i < 8; i++) {
+      randomColor.push("rgb(" + Math.random() * 255 + ", " + Math.random() * 255 + ", " + Math.random() * 255 + ")");
+    }
+    // Initialize positions and accelerations for 8 balls
+    for (let i = 0; i < 8; i++) {
+      x[i] = canvas.width / 9 * (i + 1); // evenly spaced along width of canvas
+      y[i] = 50; // same starting y position
+      vx[i] = 0;
+      vy[i] = 0;
+
+      // Set acceleration based on planet
+      if (i == 0) {
+        ay[i] = mercuryGravity;
+      } else if (i == 1) {
+        ay[i] = venusGravity;
+      } else if (i == 2) {
+        ay[i] = earthGravity;
+      } else if (i == 3) {
+        ay[i] = marsGravity;
+      } else if (i == 4) {
+        ay[i] = jupiterGravity;
+      } else if (i == 5) {
+        ay[i] = saturnGravity;
+      } else if (i == 6) {
+        ay[i] = uranusGravity;
+      } else if (i == 7) {
+        ay[i] = neptuneGravity;
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < 100; i++) {
+      //ctx.strokeStyle = "rgba(255, 255, 255, " + Math.random() + ")";  // set stroke color and transparency
+      ctx.fillStyle = "rgba(255, 255, 255, " + Math.random() + ")";  // set stroke color and transparency
+      ctx.beginPath();
+      ctx.arc(starPositions[i][0], starPositions[i][1], Math.random() * 2 + 1, 0, 2 * Math.PI);
+      //ctx.stroke();
+      ctx.fill();
+    }
+    // Update and draw each ball
+    for (let i = 0; i < 8; i++) {
+      // Update position using velocity and acceleration
+      vy[i] += ay[i];
+      y[i] += vy[i];
+
+      // Check for collisions with the ground
+      if (y[i] + radius > canvas.height-55) {
+        y[i] = canvas.height - radius-55;
+        vy[i] *= -e;
+      }
+
+      // Draw ball
+      ctx.fillStyle = planetColors[i];
+      ctx.beginPath();
+      ctx.arc(x[i], y[i], radius, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // Draw planet name
+      ctx.fillStyle = planetColors[i];
+      ctx.font = "20px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(planets[i], x[i],canvas.height-20);
+//      ctx.fillText(planets[i], x[i], y[i] - radius - 5);
+      // Draw planet name
+      ctx.fillStyle = planetColors[i];
+      ctx.font = "20px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(ay[i]+" m/s^2", x[i], canvas.height);
+//      ctx.fillText(ay[i]+" m/s^2", x[i], y[i] - radius - 30);
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = 'rgb(30,30,30)';
+
+    // Begin a new path
+    ctx.beginPath();
+
+    // Move the pen to the starting point (x1, y1)
+    ctx.moveTo(0, canvas.height-50);
+
+    // Draw a line to the ending point (x2, y2)
+    ctx.lineTo(canvas.width, canvas.height-50);
+
+    // Stroke the line
+    ctx.stroke();
+    }
+  }
+
+  // Call setup and draw functions
+  document.getElementById('restartButton').addEventListener('click', function() {
+      setup();
+      draw();
+    });
+  </script>
+</body>
+</html>

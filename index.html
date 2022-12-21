@@ -1,43 +1,134 @@
 <!DOCTYPE html>
-<html lang="en" >
-  <head>
-    <title>Hello!</title>
-    <style>
+<html>
+<head>
+  <style>
+    /* Add some style to the top section */
+    #top {
+      height: 10%;
+      width: 60%;
+      background-color: lightblue;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: fixed;
+      top: 0;
+}
+    }
 
-      .right{
-        float: right;
-      }
+    /* Add some style to the tabs */
+    .tab {
+      cursor: pointer;
+      padding: 10px;
+      font-size: 16px;
+      color: white;
+    }
+    .tab:hover {
+  /* Change the font weight and size on hover */
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-      #bodytag{
-                background-color: lightsalmon;
-      }
+    /* Add some style to the horizontal sections */
+    .section {
+      height: 80%;
+      width: 100%;
+      background-color: white;
+      text-align: center;
+      font-size: 24px;
+      padding: 50px;
 
-      #texttag{
-                color:white;
-                text-align: center;
-      }
+  /* Other styles for the horizontal sections */
+  display: flex;
+}
 
-      #topnav ul  li{
-              display: inline; margin-left: 0; margin-right: 10px; line-height: 40px;font-size: 20px;
-      }
-      #topnav ul  li:hover{
-        text-decoration: underline;
-      }
+.section-container {
+  /* Use flex to divide the section into two columns */
+  display: flex;
+}
 
+.section-text {
+  /* Set the width of the text container to 60% */
+  width: 60%;
+}
 
-    </style>  
+.section-image {
+  /* Set the width of the image container to 40% */
+  width: 40%;
+}
+  </style>
 </head>
+<body>
+  <!-- Create the top section with the tabs -->
+  <div id="top">
+    <div class="tab" onclick="scrollToSection('about-me')">About Me</div>
+    <div class="tab" onclick="scrollToSection('research-projects')">Research Projects</div>
+    <div class="tab" onclick="scrollToSection('publications')">Publications</div>
+    <div class="tab" onclick="scrollToSection('fun-with-science')">Fun with Science</div>
+    <div class="tab" onclick="scrollToSection('contact-me')">Contact Me</div>
+  </div>
 
-    <body id="bodytag">
-      <h1 id="texttag">Webpage under construction</h1>
+  <!-- Create the horizontal sections -->
+  <div id="about-me" class="section">
+  <!-- Add a container for the text and image -->
+  <div class="section-container">
+    <!-- Add a container for the text -->
+    <div class="section-text">
+    <h1>About Me</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+      pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
+      tincidunt nulla urna id urna. Suspendisse potenti.
+    </p>
+  </div>
+    <!-- Add a container for the image -->
+    <div class="section-image">
+      <img src="image.jpg" alt="image">
+    </div>
+  </div>
+</div>
+  <div id="research-projects" class="section">
+    <h1>Research Projects</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+      pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
+      tincidunt nulla urna id urna. Suspendisse potenti.
+    </p>
+  </div>
+  <div id="publications" class="section">
+    <h1>Publications</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+      pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
+      tincidunt nulla urna id urna. Suspendisse potenti.
+    </p>
+  </div>
+  <div id="fun-with-science" class="section">
+      <h1>Fun with Science</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+    pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
+    tincidunt nulla urna id urna. Suspendisse potenti.
+  </p>
+</div>
+<div id="contact-me" class="section">
+  <h1>Contact Me</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+    pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
+    tincidunt nulla urna id urna. Suspendisse potenti.
+  </p>
+</div>
 
-      <div id="topnav" class="right">
-        <ul>
-              <li>Research</li>
-              <li>Publications</li>
-              <li><a href="bouncingOnPlanets.html">Fun</li>
-              <li>Contact</li>
-        </ul>
-      </div><!-- // end #topnav -->
-    </body>
+<!-- Add a script to handle tab clicks and scrolling -->
+<script>
+  function scrollToSection(id) {
+    // Find the element with the specified ID
+    const element = document.getElementById(id);
+
+    // Scroll to the element
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+</script>
+</body>
 </html>
+

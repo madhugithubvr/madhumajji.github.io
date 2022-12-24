@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Brownian Dynamics Simulation</title>
+  <style>
+  canvas {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+body {
+  background-color: black;
+}
+</style>
+</head>
+<body>
+    <canvas id="simulation"  width="600" height="600" style="display: block; margin: auto; background-color: grey;"></canvas>
+
+    <script>
+    // Set up the canvas
+    var canvas = document.getElementById('simulation');
+    var context = canvas.getContext('2d');
+
+// Define the simulation parameters
+    const numParticles = 300;
+    const timestep = 0.001;
+    const radius = 10; // Radius of each particle in pixels
+    const kBT = 0.1;//Thermal energy
+    const a = 0; // depletion strenght
+    const gamma=.1/radius;
+    const ukT=-1;
+    const delta=0.1;
+    const kappa =11;
+    const yukA = .6;
+    //const gamma=6*Math.PI*0.001*radius;
+    //var sigma = 2*kB*T/timestep;
+    // Set up the particles
+// create array of 10 particles with random positions
+    var particles = [];
+    for (var i = 0; i < numParticles; i++) {
+          var x = Math.random() * (canvas.width);
+          var y = Math.random() * (canvas.height);
+          //var vx= 0;
+          //var vy= 0;
+          var color = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'); // random color in hexadecimal format
+
+          particles.push({x: x, y: y, color: color});
+    }
+
+    // //Brownian velocity sampling
+    // function randn(sigma) {
+    // // Generate a random value from a normal distribution with mean 0 and variance sigma
+    //   var u = 0;
+    //   var v = 0;
+    //   while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+    //   while(v === 0) v = Math.random();
+    //   var num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+
+    // // Apply the formula for a normal distribution with mean 0 and variance sigma
+    //   return num * sigma;
+    // }
+
+    // // Define the hard sphere potential
+      function hardSpherePotential(r) {
+       //return 0.5 * 0.1 * (1 - Math.tanh((r - 2.01*radius) / 0.1));
+       return 1000* Math.exp(-Math.pow(r/radius, 20));
+
+     }
+    // function hardSphereRepulsion(r, radius) {
+    // // Calculate the repulsion between two hard spheres based on their distance and radius
+    //     if (r < 3*radius) {
+    //       // If the spheres are overlapping, return a large repulsive force
+    //       return Number. MAX_VALUE;
+    //     } else {
+    //       // If the spheres are not overlapping, return 0 repulsion
+    //       return 0;
+    // }
+    //}
+
+    // Define the Asakura-Oosawa depletion potential (attractive)
+    function asakuraOosawaPotential(r, ukT, delta) {
+      var r1=r/radius;
+      rmin = 2;
+      rmax = 2+2*delta;
+      coeff1 = ukT;
+      coeff2 = delta;
+      coeff3 = 1;
+      coeff4 = 1;
+      if (r1 < rmax && r1 > rmin) {
+        return -3.0 * coeff1 / coeff2 ** 2.0 / (3.0 / 2.0 + coeff2) / 16 / r1**2 * (coeff3 + coeff4 + 2 * coeff2 - r1) * (coeff3 + coeff4 + 2 * coeff2 + r1) * ((coeff3 - coeff4)**2 - r1**2);
+      }else{
+        return 0;
+      }
+    }
+    // Define the Yukawa repulsive potential
+    function YukawaPotential(r, yukA,kappa) {
+      var r1=r/radius;
+      rmin=2;
+      rmax=10;
+      coeff1=yukA;
+      coeff2 = kappa;
+      coeff3 = 1;
+      coeff4 = 1;
+      if (r1 < rmax && r1 > rmin) {
+        return coeff1 / r1**2 * Math.exp(-coeff2 * (r1 - (coeff3 + coeff4))) + coeff1 * coeff2 / r1 * Math.exp(-coeff2 * (r1 - (coeff3 + coeff4)));
+      }else{
+        return 0;
+      }
+    }
+
+    var stepCounter=0
+      // This function will be called repeatedly to animate the simulation
+    function step() {
+
+        // Calculate the forces on each particle
+      for (let i = 0; i < numParticles; i++) {
+        const particle1 = particles[i];
+
+        // Reset the forces on this particle
+        particle1.fx = 0;
+        particle1.fy = 0;
+
+        for (let j = 0; j < numParticles; j++) {
+          if (i === j) continue;
+
+          var particle2 = particles[j];
+
+          // Calculate the distance between the two particles
+          var dx = particle1.x - particle2.x;
+          var dy = particle1.y - particle2.y;
+          var r = Math.sqrt(dx * dx + dy * dy);
+          var direction = Math.atan2(dy, dx);
+           if(r<2*radius){
+             particle1.x-=dx*(r/2-radius)*1.0001/r;
+             particle1.y-=dy*(r/2-radius)*1.0001/r;
+             particle2.x+=dx*(r/2-radius)*1.0001/r;
+             particle2.y+=dy*(r/2-radius)*1.0001/r;
+           }
+          // Calculate the hard sphere force
+          var hardSphereForce = 0;// hardSpherePotential(r);
+          //var hardSphereForce=0;
+          var fbx =Math.random() - 0.5;
+          var fby =Math.random() - 0.5;
+          // if (r<2.5*radius){
+          //   console.log('r',hardSphereForce)
+          // }
+          // Calculate the Asakura-Oosawa depletion force
+          var potentialForce = asakuraOosawaPotential(r, ukT, delta)+YukawaPotential(r, yukA,kappa);
+          //console.log(potentialForce);
+          // Add the forces to the particle's net force
+          particle1.fx += fbx*kBT+Math.cos(direction) * (hardSphereForce + potentialForce);
+          particle1.fy += fby*kBT+Math.sin(direction) * (hardSphereForce + potentialForce);
+          particle2.fx -= Math.cos(direction) * (hardSphereForce + potentialForce);
+          particle2.fy -= Math.sin(direction) * (hardSphereForce + potentialForce);
+        }
+      }
+
+       // Update the positions and velocities of each particle
+      for (let i = 0; i < numParticles; i++) {
+        var particle = particles[i];
+
+
+        //sigma=100;//variance for brownian vel
+        // Update the velocity using the Euler-Cromer method
+        //particle.vx = randn(sigma) + timestep * particle.fx / (2 * kB * temperature);
+        //particle.vy = randn(sigma) + timestep * particle.fy / (2 * kB * temperature);
+        //console.log("particles vel:", particle.vx);
+
+        // Update the position using the Euler-Cromer method
+        //particle.x += timestep * particle.vx;
+        //particle.y += timestep * particle.vy;
+        // Update the position using the Euler-Cromer method
+        particle.x += timestep * particle.fx/gamma;
+        particle.y += timestep * particle.fy/gamma;
+
+        if (particle.x <= 0 ) {
+        // Particle has crossed the left or right boundary, so reverse its x velocity
+            particle.x = particle.x+canvas.width;
+        }
+        if (particle.x >= canvas.width) {
+        // Particle has crossed the left or right boundary, so reverse its x velocity
+            particle.x = particle.x-canvas.width;
+        }
+
+        if (particle.y <= 0) {
+        // Particle has crossed the top or bottom boundary, so reverse its y velocity
+          particle.y = particle.y+canvas.height;
+        }
+        if ( particle.y >= canvas.height) {
+        // Particle has crossed the top or bottom boundary, so reverse its y velocity
+          particle.y = particle.y-canvas.height;
+        }
+
+      }
+
+      // Clear the canvas
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw each particle
+      for (let i = 0; i < numParticles; i++) {
+        var particle = particles[i];
+        // Create gradient for the particle
+        // Create random edge color for the particle
+
+
+        context.beginPath();
+        context.arc(particle.x, particle.y, radius, 0, 2 * Math.PI);
+        //context.fillStyle = particle.color;
+        // Set the fill style to the gradient
+        var gradient = context.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, radius);
+          gradient.addColorStop(0, "#FFFFFF"); // set center color to white
+          gradient.addColorStop(1, particle.color); // set edge color to random color
+        context.fillStyle = gradient;
+        context.fill();
+        //context.strokeStyle = "#000000"; // set stroke color to black
+        //context.stroke(); // draw the border
+        context.closePath();
+      }
+      // console.log("particles:", particles);
+      // console.log("canvas:", canvas);
+      // console.log("context:", context);
+
+      // Increment step counter
+      stepCounter++;
+      // Animate the next frame
+      if (stepCounter < 10000) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    // Start the simulation
+    step();
+
+  </script>
+  </body>
+</html>
+

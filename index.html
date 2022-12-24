@@ -12,35 +12,33 @@
       justify-content: space-around;
       position: fixed;
       top: 0;
-}
     }
 
     /* Add some style to the tabs */
     .tab {
       cursor: pointer;
-      padding: 10px;
+
       font-size: 26px;
       color: white;
     }
     .tab:hover {
   /* Change the font weight and size on hover */
       font-weight: bold;
-      font-size: 18px;
+      font-size: 30px;
     }
 
     /* Add some style to the horizontal sections */
     .section {
-      height: 80%;
       width: 100%;
-      background-color:black;/*rgb(rand(0, 127), rand(0, 127), rand(0, 127));*/
-      height: 80%;
-      text-align: center;
-      font-color: white;
+      background-color:grey;
+      text-align: justify;
+      color: black;
       font-size: 24px;
-      padding: 50px;
-
-  /* Other styles for the horizontal sections */
-  display: flex;
+      /* Other styles for the horizontal sections */
+      display: flex;
+      height: 90%;
+      min-height: 100vh;
+      padding:  5px;
 }
 
 .section-container {
@@ -50,23 +48,31 @@
 
 .section-text {
   /* Set the width of the text container to 60% */
-  width: 60%;
+  width: 70%;
+  padding: 30px 40px;
 }
+/* Add a different padding amount for the about-me section */
+  #about-me .section-text {
+    /* Set the width of the text container to 60% */
+    width: 70%;
+    padding: 80px 40px;
+  }
 
 .section-image {
   /* Set the width of the image container to 40% */
-  width: 40%;
+  width: 30%;
 }
+
   </style>
 </head>
 <body>
   <!-- Create the top section with the tabs -->
   <div id="top">
     <div class="tab" onclick="scrollToSection('about-me')">About Me</div>
-    <div class="tab" onclick="scrollToSection('research-projects')">Research Projects</div>
+    <div class="tab" onclick="scrollToSection('research')">Research</div>
     <div class="tab" onclick="scrollToSection('publications')">Publications</div>
-    <div class="tab" onclick="scrollToSection('fun-with-science')">Fun with Science</div>
-    <div class="tab" onclick="scrollToSection('contact-me')">Contact Me</div>
+    <div class="tab" onclick="scrollToSection('fun-science')">Fun Science</div>
+    <div class="tab" onclick="scrollToSection('contact-me')">Contact</div>
   </div>
 
   <!-- Create the horizontal sections -->
@@ -77,62 +83,147 @@
     <div class="section-text">
     <h1>About Me</h1>
     <p>
-      Hi there! My name is Madhu and I am a postdoctoral researcher at MIT. I have a passion for discovering new things and constantly learning about the world around me. In my research, I focus on developing materials for applicatioons in sustainable energy and health using colloidal science principles.
-
-      I have always been curious and driven to learn as much as I can, and my work as a researcher allows me to indulge this curiosity on a daily basis. I am constantly amazed by the depth and complexity of the world we live in, and I feel fortunate to have the opportunity to contribute to our understanding of it.
-
+      Hello! My name is Madhu and I am a postdoctoral researcher at MIT. In my research, I focus on developing materials for applications in sustainable energy and health using colloidal science principles.
+      <br>
+      <br>
+      I have always been curious and driven to learn about new things, and my work as a researcher allows me to indulge this curiosity on a daily basis. I am constantly amazed by the depth and complexity of the world we live in, and I feel fortunate to have the opportunity to contribute to our understanding of it.
+      <br>
+      <br>
       In my free time, I enjoy watching documentaries, taking strolls in nature, and  finding new ways to expand my knowledge and understanding of the world. I believe that learning is a lifelong pursuit, and I am always looking for new opportunities to grow and discover.
     </p>
   </div>
     <!-- Add a container for the image -->
     <div class="section-image">
-      <img src="image.jpg" alt="image">
+      <img src="image1.jpg" alt="">
     </div>
   </div>
 </div>
-  <div id="research-projects" class="section">
-    <h1>Research Projects</h1>
+<!-- Create the horizontal sections -->
+  <div id="research" class="section">
+  <!-- Add a container for the text and image -->
+  <div class="section-container">
+    <!-- Add a container for the text -->
+    <div class="section-text">
+    <h1>Research</h1>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-      pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
-      tincidunt nulla urna id urna. Suspendisse potenti.
+      The overall theme of my past research has been understanding the rheology and transport of suspensions, both in colloidal and non-colloidal regimes, and both in low-Reynolds-number and inertial flow regimes.
     </p>
   </div>
+    <!-- Add a container for the image -->
+    <div class="section-image">
+      <img src="image1.jpg" alt="">
+    </div>
+  </div>
+</div>
+<!-- Create the horizontal sections -->
   <div id="publications" class="section">
+  <!-- Add a container for the text and image -->
+  <div class="section-container">
+    <!-- Add a container for the text -->
+    <div class="section-text">
     <h1>Publications</h1>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-      pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
-      tincidunt nulla urna id urna. Suspendisse potenti.
+      Here are the list of my research publications
+      <ul>
+        <li>Madhu V. Majji, James W. Swan, “Effect of particle roughness on the microstructure of sheared colloidal gels.” <i>Soft Matter</i> under preperation.</li>
+
+        <li>Madhu V. Majji, Bertrand J. Neyhouse, Nicholas J. Matteucci, Kyle R. Lennon, Christopher T. Mallia, Alexis M. Fenton Jr., James W. Swan, Fikile R. Brushett. " Modeling electrochemical and rheological characteristics of suspension-based electrodes for redox flow cells." <i>Journal of The Electrochemical Society</i>, Submitted. </li>
+
+        <li>Madhu V. Majji, James W. Swan, “Parameterization of hydrodynamic friction in a model for sheared suspensions of rough particles.” <i>Physical Review Fluids</i>, submitted. </li>
+        <li>Baroudi Lina, Madhu V. Majji, Stephen Peluso and Jeffrey F. Morris. " Taylor-Couette flow of hard-sphere suspensions: Overview of current understanding." <i>Philosophical transactions A</i>, (2022) <a href="https://arxiv.org/abs/2212.00205" target="_blank">[Link]</a></li>
+
+        <li>Lin Han, Madhu V. Majji, Noah Cho, John R. Zeeman, James W. Swan, and Jeffrey J. Richards. "Quantifying the hydrodynamic contribution to electrical transport in non-Brownian suspensions." <i>Proceedings of the National Academy of Sciences</i> 119, no. 29 (2022): e2203470119.<a href="https://doi.org/10.1073/pnas.2203470119" target="_blank">[Link]</a></li>
+
+        <li>Baroudi, Lina, Madhu V. Majji, and Jeffrey F. Morris. "Effect of inertial migration of particles on flow transitions of a suspension Taylor-Couette flow." <i>Physical Review Fluids</i> 5, no. 11 (2020): 114303. <a href="https://doi.org/10.1103/PhysRevFluids.5.114303" target="_blank">[Link]</a></li>
+
+        <li>Geisler S. Taylor, Madhu V. Majji, Jana S. Kesavan, Valerie J. Alstadt, Eric SG Shaqfeh, and Gianluca Iaccarino. "Simulation of microparticle inhalation in rhesus monkey airways." <i>Physical Review Fluids</i> 4, no. 8 (2019): 083101. <a href="https://doi.org/10.1103/PhysRevFluids.4.083101" target="_blank">[Link]</a></li>
+
+        <li>Madhu V. Majji, Sanjoy Banerjee, and Jeffrey F. Morris, ”Inertial flow transitions of a suspension in Taylor–Couette geometry” <i>Journal of Fluid Mechanics</i>, 835, pp.936-969, 2018. <a href=" https://doi.org/10.1017/jfm.2017.754" target="_blank">[Link]</a></li>
+        <li>Madhu V. Majji, and Jeffrey F. Morris, “Inertial migration of particles in Taylor-Couette flows” <i>Physics of Fluids</i>, 30(3), p.033303, 2018. <a href="https://doi.org/10.1063/1.5020220" target="_blank">[Link]</a></li>
+    </ul>
     </p>
   </div>
-  <div id="fun-with-science" class="section">
-      <h1>Fun with Science</h1>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-    pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
-    tincidunt nulla urna id urna. Suspendisse potenti.
-    <iframe src="bouncingOnPlanets.html" width="60%"></iframe>
-  </p>
+    <!-- Add a container for the image -->
+    <div class="section-image">
+      <img src="image.jpg" alt="">
+    </div>
+  </div>
 </div>
-<div id="contact-me" class="section">
-  <h1>Contact Me</h1>
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-    pretium, ipsum id euismod dignissim, orci augue efficitur nisi, a
-    tincidunt nulla urna id urna. Suspendisse potenti.
-  </p>
+
+<!-- Create the horizontal sections -->
+  <div id="fun-science" class="section">
+  <!-- Add a container for the text and image -->
+  <div class="section-container">
+    <!-- Add a container for the text -->
+    <div class="section-text">
+    <h1>Fun Science</h1>
+    <p>
+      I enjoy creating demonstrations of simple and fun physical processes. Here are some links to visualize them.
+      <ul>
+      <li>How differently does a ball bounce on different planets in the solar system? <a href="bouncingOnPlanets.html">[Link]</a></li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    </p>
+  </div>
+    <!-- Add a container for the image -->
+    <div class="section-image">
+      <img src="image.jpg" alt="">
+    </div>
+  </div>
 </div>
+
+<!-- Create the horizontal sections -->
+  <div id="contact-me" class="section">
+  <!-- Add a container for the text and image -->
+  <div class="section-container">
+    <!-- Add a container for the text -->
+    <div class="section-text">
+    <h1>Contact</h1>
+    <p>
+      Reach me at <br> madhuvr@mit.edu
+    </p>
+  </div>
+    <!-- Add a container for the image -->
+    <div class="section-image">
+      <img src="image.jpg" alt="">
+    </div>
+  </div>
+</div>
+
 
 <!-- Add a script to handle tab clicks and scrolling -->
 <script>
   function scrollToSection(id) {
-    // Find the element with the specified ID
-    const element = document.getElementById(id);
+  // Find the element with the specified ID
+  const element = document.getElementById(id);
 
-    // Scroll to the element
-    element.scrollIntoView({behavior: 'smooth'});
-  }
+  // Get the height of the display window
+  const windowHeight = window.innerHeight;
+  const scrollDistance = windowHeight * 0.1;
+  // Scroll to the element
+  window.scrollTo({
+    top: element.offsetTop - scrollDistance,
+    behavior: 'smooth'
+  });
+}
+// Generate a random color
+function getRandomColor() {
+  // Generate a random value between 0 and 255 for each channel
+ let r = Math.floor(Math.random() * 75) + 180;
+let g = Math.floor(Math.random() * 75) + 180;
+let b = Math.floor(Math.random() * 75) + 180;
+  // Return the color as a string in the format 'rgb(r, g, b)'
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+// Get all the horizontal section elements
+let sections = document.querySelectorAll('.section');
+// Loop through the list of sections
+sections.forEach(section => {
+  // Set the background color of the section to a random color
+  section.style.backgroundColor = getRandomColor();
+});
 </script>
 </body>
 </html>

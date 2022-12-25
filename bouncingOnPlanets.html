@@ -38,6 +38,7 @@
 <body>
   <div id="button-container">
     <button id="restartButton">Restart</button>
+    <button id="backButton">Home</button>
   </div>
 
   <div class="bottom-middle">A ball bouncing on different planets</div>
@@ -182,6 +183,13 @@
       setup();
       draw();
     });
+  let backButton = document.getElementById("backButton");
+
+  // Add a click event listener to the button
+  backButton.addEventListener("click", function() {
+    // Navigate to the page "profx.html" when the button is clicked
+    window.location.href = "index.html";
+  });
   </script>
 </body>
 </html>
